@@ -1,5 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import 'theme.scss';
 
 html, body, app-root, md-sidenav-container, .site {
     width: 100%;
@@ -18,4 +17,14 @@ main {
     flex: 1;
 }
 
+/* 定宽 */
+.full-width {
+    width: 100%;
+}
+
+.fill-remaining-space {
+    //使用flexbox填充剩余空间
+    //@angular/material中的很多控件使用了flex布局
+    flex: 1 1 auto;
+}
 

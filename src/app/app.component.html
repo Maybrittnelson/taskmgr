@@ -1,15 +1,16 @@
-<md-sidenav-container>
-  <md-sidenav #sidenav>
+<md-sidenav-container [class.myapp-dark-theme]="darkTheme">
+  <!-- align: 对齐方式.默认是start mode: 打开方式.默认是over-->
+  <md-sidenav #sidenav mode="over">
     <app-sidebar>
 
     </app-sidebar>
   </md-sidenav>
 <div class="site">
   <header>
-    <app-header></app-header>
+    <app-header (toggle)="sidenav.toggle()" (toggleDarkTheme)="switchTheme($event)"></app-header>
   </header>
   <main>
-    <button (click)="sidenav.open()">打开侧边栏</button>
+      <router-outlet></router-outlet>
   </main>
   <footer>
     <app-footer></app-footer>
