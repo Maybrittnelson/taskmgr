@@ -12,13 +12,13 @@ import {ProjectRoutingModule} from './project-routing.module';
     ProjectRoutingModule
   ],
   declarations: [
-    ProjectListComponent, 
-    ProjectItemComponent, 
-    NewProjectComponent, 
+    ProjectListComponent,
+    ProjectItemComponent,
+    NewProjectComponent,
     InviteComponent],
   entryComponents: [
     NewProjectComponent,
-    InviteComponent
+    InviteComponent,
   ]
 })
 export class ProjectModule { }
