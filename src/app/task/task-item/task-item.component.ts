@@ -1,9 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ChangeDetectionStrategy } from '@angular/core';
+import { itemAnim } from '../../anims/item.anim';
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.scss']
+  styleUrls: ['./task-item.component.scss'],
+  animations: [
+    itemAnim
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskItemComponent implements OnInit {
   @Input()
@@ -12,6 +16,8 @@ export class TaskItemComponent implements OnInit {
   avatar;
   @Output()
   taskClick = new EventEmitter<void>();
+  widerPriority = 'in';
+
   constructor() { }
 
   ngOnInit() {
@@ -25,6 +31,17 @@ export class TaskItemComponent implements OnInit {
 
   onCheckBoxClick(ev: Event) {
     ev.stopPropagation();
+  }
+
+  /* 修改组件中一部分的动画 */
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    this.widerPriority = 'out';
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.widerPriority = 'in';
   }
 
 }

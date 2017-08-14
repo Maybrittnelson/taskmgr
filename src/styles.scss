@@ -12,13 +12,12 @@ html, body, app-root, md-sidenav-container, .site {
     flex-direction: column;
 }
 
-/* 占据剩下的所有 */
-main {
-    flex: 1;
-    display: flex;
+/* 占据剩下的所有    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
+main {
+    flex: 1;
 }
 
 /* 定宽 */
