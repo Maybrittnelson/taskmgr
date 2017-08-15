@@ -50,46 +50,27 @@
       "name": "企业协作平台",
       "desc": "这是一个企业内部项目",
       "coverImg": "assets/img/covers/0.jpg",
-      "members": ["1", "2"]
+      "members": [
+        "1",
+        "2"
+      ]
     },
     {
       "id": "2",
-      "name": "自动化测试项目",
+      "name": "自动化测试项目2",
       "desc": "这是一个企业内部项目",
       "coverImg": "assets/img/covers/1.jpg",
-      "members": ["1"]
+      "members": [
+        "1"
+      ]
     }
   ],
   "taskLists": [
     {
-      "name": "待办",
-      "projectId": "Sk2HaTagb",
+      "name": "list1",
       "order": 1,
-      "id": "BkenST66lb"
-    },
-    {
-      "name": "已完成",
-      "projectId": "Sk2HaTagb",
-      "order": 3,
-      "id": "SkG3Ba6Tgb"
-    },
-    {
-      "name": "待办",
-      "projectId": "Hya1moGb-",
-      "order": 1,
-      "id": "BylTyXiM-b"
-    },
-    {
-      "name": "进行中",
-      "projectId": "Hya1moGb-",
-      "order": 2,
-      "id": "BkWpk7jGZb"
-    },
-    {
-      "name": "已完成",
-      "projectId": "Hya1moGb-",
-      "order": 3,
-      "id": "H1fTyXjMWW"
+      "projectId": "1",
+      "id": "HyyNtugub"
     }
   ],
   "tasks": [

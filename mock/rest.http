@@ -1,1 +1,17 @@
 GET http://localhost:3000/projects
+
+###
+
+GET http://localhost:3000/taskLists
+
+###
+
+POST http://localhost:3000/taskLists
+Content-Type: application/json
+
+{
+    "name": "list1",
+    "order": 1,
+    "projectId": "1"
+}
+

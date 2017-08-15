@@ -20,6 +20,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl} fr
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
 
+  selected: string;
   @Input()
   cols = 6;
   @Input()
@@ -33,9 +34,7 @@ export class ImageListSelectComponent implements ControlValueAccessor {
   @Input()
   itemWidth = '80px';
 
-  selected: string;
-  constructor() {
-  }
+
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
   // 由框架注册，然后我们使用它把变化发回表单
   // 注意，和 EventEmitter 尽管很像，但发送回的对象不同
@@ -51,7 +50,9 @@ export class ImageListSelectComponent implements ControlValueAccessor {
    */
   // 写入控件值
   writeValue(obj: any): void {
-    this.selected = obj;
+    if (obj && obj !== '') {
+      this.selected = obj;
+    }
   }
 
   /**
