@@ -24,12 +24,12 @@
         每日佳句
     </md-card-title>
     <md-card-subtitle>
-        满足感在于不断的努力, 而不是现有成就。全心努力定会胜利慢慢。
+        {{quote.cn}}
     </md-card-subtitle>
   </md-card-header>
-    <img md-card-image src="/assets/quote_fallback.jpg" alt="">
+    <img md-card-image [src]="quote.pic" alt="quote image">
   <md-card-content>
-      Satisfaction is the constant effort, not the existing achievement. Wholeheartedly will win slowly.
+    {{quote.en}}
   </md-card-content>
 </md-card>
 </form>
