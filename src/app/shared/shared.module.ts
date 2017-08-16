@@ -19,11 +19,16 @@ import { MdToolbarModule,
          MdNativeDateModule,
          MdSelectModule,
          MdSidenavModule,
+         MdChipsModule,
+         MdTabsModule,
          MdInputModule} from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {DirectiveModule} from "../directive/directive.module";
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { AgeInputComponent } from './age-input/age-input.component';
+import { ChipsListComponent } from './chips-list/chips-list.component';
+import { IdentityInputComponent } from './identity-input/identity-input.component';
+import { AreaListComponent } from './area-list/area-list.component';
 
 @NgModule({
   imports: [
@@ -50,6 +55,8 @@ import { AgeInputComponent } from './age-input/age-input.component';
     MdSelectModule,
     MdSidenavModule,
     DirectiveModule,
+    MdChipsModule,
+    MdTabsModule,
   ],
   exports: [
     CommonModule,
@@ -76,12 +83,20 @@ import { AgeInputComponent } from './age-input/age-input.component';
     MdSidenavModule,
     DirectiveModule,
     ImageListSelectComponent,
-    AgeInputComponent
+    AgeInputComponent,
+    ChipsListComponent,
+    MdChipsModule,
+    MdTabsModule,
+    IdentityInputComponent,
+    AreaListComponent,
   ],
   entryComponents: [ConfirmDialogComponent],
   declarations: [
     ConfirmDialogComponent,
     ImageListSelectComponent,
-    AgeInputComponent]
+    AgeInputComponent,
+    ChipsListComponent,
+    IdentityInputComponent,
+    AreaListComponent]
 })
 export class SharedModule { }
