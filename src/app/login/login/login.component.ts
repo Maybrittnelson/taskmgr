@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private quoteService$: QuoteService,
               private store$: Store<fromRoot.State>) {
-    this.quote$ = this.store$.select(state => state.quote.quote);
+    this.quote$ = this.store$.select(fromRoot.getQuote);
     this.quoteService$.
       getQuote()
       .subscribe(q => {this.store$.dispatch(new actions.LoadSuccessAction(q));

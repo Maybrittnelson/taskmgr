@@ -4,6 +4,7 @@ import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { compose } from '@ngrx/core/compose';
+import { createSelector } from 'reselect';
 
 import * as fromQuote from './quote.reducer';
 
@@ -30,6 +31,10 @@ const developmentReducers: ActionReducer<State> = compose(storeFreeze, combineRe
 export function reducer(state = initialState, action: any): State {
   return environment.production ?  productionReducers(state, action) : developmentReducers(state, action);
 }
+
+export const getQuoteSate = (state: State) => state.quote;
+
+export const getQuote = createSelector(getQuoteSate, fromQuote.getQuote);
 @NgModule({
     imports: [
         StoreModule.provideStore(reducer),
