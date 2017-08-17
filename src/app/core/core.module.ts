@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { loadSvgResources } from '../utils/svg.util';
+import { AppStoreModule} from "../reducers/index";
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/concat';
@@ -43,7 +44,8 @@ import '../utils/debug.util';
     SharedModule,
     AppRoutingModule,
     ServicesModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AppStoreModule
   ],
   declarations: [
     HeaderComponent,
