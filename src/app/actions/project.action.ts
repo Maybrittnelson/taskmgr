@@ -1,8 +1,8 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import {Auth} from "../domain/auth.model";
-import {User} from "../domain/user.model";
-import {Project} from "../domain/project.model";
+import {Auth} from '../domain/auth.model';
+import {User} from '../domain/user.model';
+import {Project} from '../domain/project.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -151,20 +151,17 @@ export type Actions
   = AddAction
   | AddSuccessAction
   | AddFailAction
-  | UpdateProjectAction
-  | UpdateProjectSuccessAction
-  | UpdateProjectFailAction
-  | UpdateListsAction
-  | UpdateListsSuccessAction
-  | UpdateListsFailAction
-  | DeleteProjectAction
-  | DeleteProjectSuccessAction
-  | DeleteProjectFailAction
-  | LoadProjectsAction
-  | LoadProjectsSuccessAction
-  | LoadProjectsFailAction
-  | SelectProjectAction
-  | InviteMembersAction
-  | InviteMembersSuccessAction
-  | InviteMembersFailAction
+  | UpdateAction
+  | UpdateSuccessAction
+  | UpdateFailAction
+  | DeleteAction
+  | DeleteSuccessAction
+  | DeleteFailAction
+  | LoadAction
+  | LoadSuccessAction
+  | LoadFailAction
+  | SelectAction
+  | InviteAction
+  | InviteSuccessAction
+  | InviteFailAction
   ;

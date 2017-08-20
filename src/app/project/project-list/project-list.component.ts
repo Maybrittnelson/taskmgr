@@ -15,6 +15,10 @@ import {ProjectService} from '../../services/project.service';
 import * as _ from 'lodash';
 import {Project} from '../../domain/project.model';
 import {Subscription} from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../reducers';
+import {Observable} from 'rxjs/Observable';
+import * as actions from '../../actions/project.action';
 
 @Component({
   selector: 'app-project-list',
@@ -29,20 +33,22 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   @HostBinding('@routeAnim') state;
 
-  projects;
-  sub: Subscription;
-  constructor(private dialog: MdDialog, private cd: ChangeDetectorRef, private service$: ProjectService) {}
+  projects$: Observable<Project[]>;
+  listAnim$: Observable<number>;
+  constructor(private dialog: MdDialog,
+              private cd: ChangeDetectorRef,
+              private store$: Store<fromRoot.State>) {
+    this.store$.dispatch(new actions.LoadAction(null));
+    this.projects$ = this.store$.select(fromRoot.getProjects);
+    this.listAnim$ = this.projects$.map(p => p.length);
+  }
+
   ngOnInit() {
-    this.sub = this.service$.get('1').subscribe(projects => {
-        this.projects = projects;
-        this.cd.markForCheck();
-    });
+
   }
 
   ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+
   }
 
   openNewProjectDialog() {
@@ -54,10 +60,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
         .take(1)
         .filter(n => n)
         .map(val => ({...val, coverImg: this.buildImgSrc(val.coverImg)}))
-        .switchMap(v => this.service$.add(v))
         .subscribe(project => {
-          this.projects = [...this.projects, project];
-          this.cd.markForCheck();
+          this.store$.dispatch(new actions.AddAction(project));
         });
   }
 
@@ -73,11 +77,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       .take(1)
       .filter(n => n)
       .map(val => ({...val, id: project.id, coverImg: this.buildImgSrc(val.coverImg)}))
-      .switchMap(v => this.service$.update(v))
       .subscribe(project => {
-        const index = this.projects.map(p => p.id).indexOf(project.id);
-        this.projects = [...this.projects.slice(0, index), project, ...this.projects.slice(index + 1)];
-        this.cd.markForCheck();
+        this.store$.dispatch(new actions.UpdateAction(project));
       });
 
   }
@@ -87,10 +88,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
-      .switchMap(_ => this.service$.del(project))
-      .subscribe(prj => {
-        this.projects = this.projects.filter(p => p.id !== prj.id);
-        this.cd.markForCheck();
+      .subscribe(_ => {
+          this.store$.dispatch(new actions.DeleteAction(project));
     });
   }
 
