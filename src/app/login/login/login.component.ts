@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import {QuoteService} from '../../services/quote.service';
 import {Quote} from '../../domain/quote.model';
 import {Observable} from 'rxjs/Observable';
 import { Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/quote.action';
+import * as authActions from '../../actions/auth.action';
 
 @Component({
   selector: 'app-login',
@@ -17,29 +17,27 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   quote$: Observable<Quote>;
   constructor(private fb: FormBuilder,
-              private quoteService$: QuoteService,
               private store$: Store<fromRoot.State>) {
     this.quote$ = this.store$.select(fromRoot.getQuote);
-    this.quoteService$.
-      getQuote()
-      .subscribe(q => {this.store$.dispatch(new actions.LoadSuccessAction(q));
-      });
+    this.store$.dispatch(new actions.LoadAction(null));
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['wan@local.dev', Validators.compose([Validators.required, Validators.email, this.validate])],
+      email: ['wan@local.dev', Validators.compose([Validators.required, Validators.email, /*this.validate*/])],
       password: ['', Validators.required]
     });
   }
 
   onSubmit({value, valid}, ev: Event) {
     ev.preventDefault();
-    console.log(JSON.stringify(value));
-    console.log(valid);
+    if (!valid) {
+      return;
+    }
+    this.store$.dispatch(new authActions.LoginAction(value));
   }
 
-  validate(c: FormControl): {[key: string]: any} {
+/*  validate(c: FormControl): {[key: string]: any} {
     if (!c.value) {
       return null;
     }
@@ -50,7 +48,7 @@ export class LoginComponent implements OnInit {
     return {
       emailNotValid: 'The email must start with wang'
     };
-  }
+  }*/
 
 
 

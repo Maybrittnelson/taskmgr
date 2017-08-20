@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { loadSvgResources } from '../utils/svg.util';
 import { AppStoreModule} from "../reducers/index";
+import { AppEffectsModule } from '../effects'
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/concat';
@@ -45,7 +46,8 @@ import '../utils/debug.util';
     AppRoutingModule,
     ServicesModule.forRoot(),
     BrowserAnimationsModule,
-    AppStoreModule
+    AppStoreModule,
+    AppEffectsModule
   ],
   declarations: [
     HeaderComponent,

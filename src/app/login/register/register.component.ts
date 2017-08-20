@@ -2,7 +2,10 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {extractInfo, getAddrByCode, isValidAddr} from '../../utils/identity.util';
-import {isValidDate} from "../../utils/date.util";
+import {isValidDate} from '../../utils/date.util';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../../reducers';
+import * as authActions from '../../actions/auth.action';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +19,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private _sub: Subscription;
   private readonly avatarName = 'avatars';
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private store$: Store<fromRoot.State>) { }
 
   ngOnInit() {
     const img = `${this.avatarName}:svg-${(Math.random() * 16).toFixed()}`;
@@ -58,7 +61,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (!valid) {
       return;
     }
-    console.log(value);
+    this.store$.dispatch(new authActions.RegisterAction(value));
+
   }
 
 }

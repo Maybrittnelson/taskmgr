@@ -7,20 +7,29 @@ import { compose } from '@ngrx/core/compose';
 import { createSelector } from 'reselect';
 
 import * as fromQuote from './quote.reducer';
+import * as fromAuth from './auth.reducer';
+import * as fromProject from './project.reducer';
 
 import { environment } from '../../environments/environment';
+import {Auth} from '../domain/auth.model';
 
 export interface State {
   quote: fromQuote.State;
-};
+  auth: Auth;
+  projects: fromProject.State;
+}
 
 const initialState: State = {
   quote: fromQuote.initialState,
+  auth: fromAuth.initialState,
+  projects: fromProject.initialState
 };
 
 const reducers = {
   quote: fromQuote.reducer,
-}
+  auth: fromAuth.reducer,
+  projects: fromProject.reducer
+};
 
 /* 作为全局的reducers */
 const productionReducers: ActionReducer<State> = combineReducers(reducers);
@@ -33,8 +42,11 @@ export function reducer(state = initialState, action: any): State {
 }
 
 export const getQuoteSate = (state: State) => state.quote;
+export const getAuthState = (state: State) => state.auth;
+export const getProjectState = (state: State) => state.projects;
 
 export const getQuote = createSelector(getQuoteSate, fromQuote.getQuote);
+export const getProject = createSelector(getProjectState, fromProject.getAll);
 @NgModule({
     imports: [
         StoreModule.provideStore(reducer),
