@@ -6,10 +6,12 @@ import { go } from '@ngrx/router-store';
 import * as actions from '../actions/project.action';
 import {AuthService} from '../services/auth.service';
 import {User} from '../domain/user.model';
+import * as userActions from '../actions/user.action';
 import {ProjectService} from '../services/project.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import * as listActions from '../actions/task-list.action';
+import {Project} from "../domain/project.model";
 
 @Injectable()
 export class ProjectEffects {
@@ -33,9 +35,10 @@ export class ProjectEffects {
   addProject$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(fromRoot.getAuthState))
-    .switchMap(([project, auth]) => {
-      const added = {...project, members: [`${auth.userId}`]};
+    .debug('add')
+    .withLatestFrom(this.store$.select(fromRoot.getAuthState).map(auth => auth.user).debug('auth'))
+    .switchMap(([project, user]) => {
+      const added = {...project, members: [`${user.id}`]};
       return this.service$.add(added)
         .map(projects => new actions.AddSuccessAction(projects))
         .catch(err => Observable.of(new actions.AddFailAction(JSON.stringify(err))));
@@ -74,12 +77,43 @@ export class ProjectEffects {
     .map(project => new listActions.LoadAction(project.id));
 
   @Effect()
-  invite: Observable<Action> = this.actions$
+  invite$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.INVITE)
     .map(toPayload)
     .switchMap(({projectId, memebers}) => this.service$.invite(projectId, memebers)
       .map(project => new actions.InviteSuccessAction(project))
       .catch(err => Observable.of(new actions.InviteFailAction(JSON.stringify(err))))
     );
+
+  @Effect()
+  loadUsers$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.LOAD_SUCCESS)
+    .map(toPayload)
+    .switchMap((projects: Project[]) => Observable.from(projects.map(prj => prj.id)))
+    .map(projectId => new userActions.LoadAction(projectId));
+
+  @Effect()
+  addUserProject$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.ADD_SUCCESS)
+    .map(toPayload)
+    .map(project => project.id)
+    .withLatestFrom(this.store$.select(fromRoot.getAuthState).map(auth => auth.user), (projectId, user) => {
+      return new userActions.AddAction({user: user, projectId: projectId});
+    })
+
+
+  @Effect()
+  removeUserProject$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.DELETE_SUCCESS)
+    .map(toPayload)
+    .map(project => project.id)
+    .withLatestFrom(this.store$.select(fromRoot.getAuthState).map(auth => auth.user), (projectId, user) => {
+      return new userActions.DeleteAction({user: user, projectId: projectId});
+    })
+  @Effect()
+  updateUserProject$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.INVITE_SUCCESS)
+    .map(toPayload)
+    .map(project => new userActions.UpdateAction(project));
 
 }

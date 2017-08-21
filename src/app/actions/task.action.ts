@@ -3,6 +3,7 @@ import { type } from '../utils/type.util';
 import {Auth} from '../domain/auth.model';
 import {User} from '../domain/user.model';
 import {Task} from '../domain/task.model';
+import {TaskList} from "../domain/task-list.model";
 
 /**
  * For each action type in an action group, make a simple
@@ -108,7 +109,7 @@ export class DeleteFailAction implements Action {
 export class LoadAction implements Action {
   type = ActionTypes.LOAD;
 
-  constructor(public payload: string) { }
+  constructor(public payload: TaskList[]) { }
 }
 
 export class LoadSuccessAction implements Action {
@@ -198,4 +199,10 @@ export type Actions
   | MoveAction
   | MoveSuccessAction
   | MoveFailAction
+  | MoveAllAction
+  | MoveAllSuccessAction
+  | MoveAllFailAction
+  | CompleteAction
+  | CompleteSuccessAction
+  | CompleteFailAction
   ;

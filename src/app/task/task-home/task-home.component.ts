@@ -11,6 +11,8 @@ import {slideToRight} from '../../anims/router.anim';
 import {Observable} from 'rxjs/Observable';
 import {TaskList} from '../../domain/task-list.model';
 import * as actions from '../../actions/task-list.action';
+import * as taskActions from '../../actions/task.action';
+
 @Component({
   selector: 'app-task-home',
   templateUrl: './task-home.component.html',
@@ -36,8 +38,14 @@ export class TaskHomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  launchNewTaskDialog() {
-    const dialogRef = this.dialog.open(NewTaskComponent, {data: {title: '新建任务'}});
+  launchNewTaskDialog(list) {
+    const user$ = this.store.select(fromRoot.getAuthState).map(auth => auth.user);
+    user$.take(1)
+      .map(user => this.dialog.open(NewTaskComponent, {data: {title: '新建任务', owner: user}}))
+      .switchMap(dialogRef => dialogRef.afterClosed().take(1).filter(n => n))
+      .subscribe(val => this.store.dispatch(new taskActions.AddAction({...val, taskListId: list.id, completed: false,
+      createDate: new Date})));
+
   }
 
   launchCopyTaskDialog() {
