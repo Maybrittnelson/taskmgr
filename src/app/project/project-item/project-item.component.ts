@@ -18,6 +18,8 @@ export class ProjectItemComponent implements OnInit {
   onEdit = new EventEmitter<void>();
   @Output()
   onDel = new EventEmitter<void>();
+  @Output()
+  onSelected = new EventEmitter<void>();
   /* 整个组件进行动画 */
   @HostBinding('@card') cardState = 'out' ;
 
@@ -37,16 +39,23 @@ export class ProjectItemComponent implements OnInit {
     this.cardState = 'out';
   }
 
-  onInviteClick() {
+  onInviteClick(ev: Event) {
+    ev.stopPropagation();
     this.onInvite.emit();
   }
 
-  onEditClick() {
+  onEditClick(ev: Event) {
+    ev.stopPropagation();
     this.onEdit.emit();
   }
 
-  onDelClick() {
+  onDelClick(ev: Event) {
+    ev.stopPropagation();
     this.onDel.emit();
+  }
+
+  onClick() {
+    this.onSelected.emit();
   }
 
 }

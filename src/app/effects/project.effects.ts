@@ -9,6 +9,7 @@ import {User} from '../domain/user.model';
 import {ProjectService} from '../services/project.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
+import * as listActions from '../actions/task-list.action';
 
 @Injectable()
 export class ProjectEffects {
@@ -36,7 +37,7 @@ export class ProjectEffects {
     .switchMap(([project, auth]) => {
       const added = {...project, members: [`${auth.userId}`]};
       return this.service$.add(added)
-        .map(projects => new actions.AddSuccessAction(project))
+        .map(projects => new actions.AddSuccessAction(projects))
         .catch(err => Observable.of(new actions.AddFailAction(JSON.stringify(err))));
     }
     );
@@ -65,6 +66,12 @@ export class ProjectEffects {
     .ofType(actions.ActionTypes.SELECT_PROJECT)
     .map(toPayload)
     .map(project => go([`/tasklists/${project.id}`]));
+
+  @Effect()
+  loadTaskLists$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.SELECT_PROJECT)
+    .map(toPayload)
+    .map(project => new listActions.LoadAction(project.id));
 
   @Effect()
   invite: Observable<Action> = this.actions$

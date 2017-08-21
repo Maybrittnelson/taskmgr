@@ -3,7 +3,8 @@
     *ngFor="let project of (projects$ | async)"
     [item]="project"
     class="card"
-    (onInvite)="launchinviteDialog()"
+    (onSelected)="selectProject(project)"
+    (onInvite)="launchInviteDialog(project)"
     (onEdit)="launchUpdateDialog(project)"
     (onDel)="launchConfirmDialog(project)">
 

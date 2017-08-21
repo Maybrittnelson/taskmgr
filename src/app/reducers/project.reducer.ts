@@ -2,6 +2,7 @@ import * as actions from '../actions/project.action';
 import {Project} from '../domain/project.model';
 import * as _ from 'lodash';
 import { createSelector } from 'reselect';
+import {covertArrToObj} from '../utils/reduer.util';
 
 export interface State {
     ids: string[];
@@ -20,6 +21,7 @@ const addProject = (state, action) => {
   if (state.entities[project.id]) {
     return state;
   }
+  console.log(project);
   const newIds = [...state.ids, project.id];
   const newEntities = {...state.entities, [project.id]: project};
   return {...state, ids: newIds, entities: newEntities};
@@ -27,7 +29,8 @@ const addProject = (state, action) => {
 
 const updateProject = (state, action) => {
   const project = action.payload;
-  const newEntities = {...state.entites, [project.id]: project};
+  const newEntities = {...state.entities, [project.id]: project};
+  console.log(newEntities);
   return {...state, entities: newEntities};
 };
 
@@ -44,13 +47,16 @@ const delProject = (state, action) => {
 
 const loadProjects = (state, action) => {
   const projects = action.payload;
-  const incomingIds = projects.map(p => p.id);
-  const newIds = _.difference(incomingIds, state.ids);
-  const incomingEntities = _.chain(projects)
-    .keyBy('id')
-    .mapValues(o => o)
-    .value();
-  const newEntities = newIds.reduce((entities, id) => ({...entities, incomingEntities: [id]}));
+  // if projects is null then return the orginal state
+  if (projects === null) {
+    return state;
+  }
+  const newProjects = projects.filter(project => !state.entities[project.id]);
+  const newIds = newProjects.map(project => project.id);
+  if (newProjects.length === 0) {
+    return state;
+  }
+  const newEntities = covertArrToObj(newProjects);
   return {
     ids: [...state.ids, ...newIds],
     entities: {...state.entities, ...newEntities},
@@ -75,7 +81,8 @@ export function reducer(state = initialState, action: actions.Actions ): State {
         return loadProjects(state, action);
       }
       case actions.ActionTypes.SELECT_PROJECT: {
-        return {...state, selectedId: action.payload.id};
+        const project = <Project>action.payload;
+        return {...state, selectedId: project.id};
       }
         default: {
             return state;
@@ -88,5 +95,6 @@ export const getEntities = (state: State) => state.entities;
 export const getSelectedId = (state: State) => state.selectedId;
 
 export const getAll = createSelector(getIds, getEntities, (ids, entities) => {
+  console.log(ids);
   return ids.map(id => entities[id]);
 });

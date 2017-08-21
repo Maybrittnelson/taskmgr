@@ -9,6 +9,7 @@ import { createSelector } from 'reselect';
 import * as fromQuote from './quote.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromProject from './project.reducer';
+import * as fromTaskList from './task-list.reducer';
 
 import { environment } from '../../environments/environment';
 import {Auth} from '../domain/auth.model';
@@ -17,18 +18,21 @@ export interface State {
   quote: fromQuote.State;
   auth: Auth;
   projects: fromProject.State;
+  taskLists: fromTaskList.State;
 }
 
 const initialState: State = {
   quote: fromQuote.initialState,
   auth: fromAuth.initialState,
-  projects: fromProject.initialState
+  projects: fromProject.initialState,
+  taskLists: fromTaskList.initialState,
 };
 
 const reducers = {
   quote: fromQuote.reducer,
   auth: fromAuth.reducer,
-  projects: fromProject.reducer
+  projects: fromProject.reducer,
+  taskLists: fromTaskList.reducer,
 };
 
 /* 作为全局的reducers */
@@ -44,9 +48,11 @@ export function reducer(state = initialState, action: any): State {
 export const getQuoteSate = (state: State) => state.quote;
 export const getAuthState = (state: State) => state.auth;
 export const getProjectState = (state: State) => state.projects;
+export const getTaskListState = (state: State) => state.taskLists;
 
 export const getQuote = createSelector(getQuoteSate, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectState, fromProject.getAll);
+export const getTaskLists = createSelector(getTaskListState, fromTaskList.getSelected)
 @NgModule({
     imports: [
         StoreModule.provideStore(reducer),

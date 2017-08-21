@@ -39,11 +39,11 @@ export class AuthEffects {
   @Effect()
   loginAndNavigate$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGIN_SUCCESS)
-    .map(_ => go(['/project']));
+    .map(_ => go(['/projects']));
 
   @Effect()
   registerAndNavigate$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.REGISTER_SUCCESS)
-    .map(_ => go(['/project']));
+    .map(_ => go(['/projects']));
 
 }

@@ -12,7 +12,6 @@ export class TaskListService {
   constructor(private http: Http, @Inject('BASE_CONFIG' )private config) {}
 
   add(taskList: TaskList): Observable<TaskList> {
-    taskList.id = null;
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
       .post(uri, JSON.stringify(taskList), {headers: this.headers})
