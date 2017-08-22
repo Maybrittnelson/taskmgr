@@ -13,7 +13,6 @@ export class TaskService {
   constructor(private http: Http, @Inject('BASE_CONFIG' )private config) {}
 
   add(task: Task): Observable<Task> {
-    task.id = null;
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
       .post(uri, JSON.stringify(task), {headers: this.headers})
@@ -47,7 +46,7 @@ export class TaskService {
   get(taskListId: string): Observable<Task[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .get(uri, {params: {'members_like': taskListId}})
+      .get(uri, {params: {'taskListId_like': taskListId}})
       .map(res => res.json() as Task[]);
   }
 

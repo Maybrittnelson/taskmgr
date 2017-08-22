@@ -9,6 +9,9 @@
         {{priority.label}}
       </md-radio-button>
     </md-radio-group>
+    <div class="full-width">
+      <app-chips-list [label]="'更改执行者'" [multiple]="false" formControlName="owner"></app-chips-list>
+    </div>
     <md-input-container class="full-width">
       <input mdInput [mdDatepicker]="dueDatepicker" type="text" placeholder="任务截止日期" formControlName="dueDate">
       <button type="button" mdSuffix [mdDatepickerToggle]="dueDatepicker"></button>
@@ -19,9 +22,15 @@
       <button type="button" mdSuffix [mdDatepickerToggle]="reminderDatepicker"></button>
     </md-input-container>
     <md-datepicker #reminderDatepicker></md-datepicker>
+    <div class="full-width">
+      <app-chips-list [label]="'更改参与者'" [multiple]="true" formControlName="followers"></app-chips-list>
+    </div>
+    <md-input-container class="full-width">
+      <textarea placeholder="备注" mdInput formControlName="remark"></textarea>
+    </md-input-container>
   </div>
   <div md-dialog-actions>
-    <button type="button" md-raised-button color="primary" (click)="onClick()">保存</button>
+    <button type="submit" md-raised-button color="primary" [disabled]="!form.valid">保存</button>
     <button type="button" md-dialog-close md-button>关闭</button>
   </div>
 </form>

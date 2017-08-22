@@ -17,7 +17,7 @@ export class TaskEffects {
     private service$: TaskService) {}
 
   @Effect()
-  loginTasks$: Observable<Action> = this.actions$
+  loadTasks$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOAD)
     .map(toPayload)
     .switchMap((taskLists) => this.service$.getByLists(taskLists)

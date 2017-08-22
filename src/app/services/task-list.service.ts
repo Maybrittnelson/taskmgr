@@ -38,7 +38,7 @@ export class TaskListService {
   get(projectId: string): Observable<TaskList[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .get(uri, {params: {'members_like': projectId}})
+      .get(uri, {params: {'projectId_like': projectId}})
       .map(res => res.json() as TaskList[]);
   }
 

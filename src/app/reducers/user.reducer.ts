@@ -46,14 +46,10 @@ const delUser = (state, action) => {
 };
 
 const loadUsers = (state, action) => {
-  const users = action.payload;
-  const incomingIds = users.map(p => p.id);
-  const newIds = _.difference(incomingIds, state.ids);
-  const incomingEntities = _.chain(users)
-    .keyBy('id')
-    .mapValues(o => o)
-    .value();
-  const newEntities = newIds.reduce((entities, id: string) => ({...entities, [id]: incomingEntities[id]}))
+  const users = <User[]>action.payload;
+  const newUsers = users.filter(user => !state.entities[user.id]);
+  const newIds = newUsers.map(user => user.id);
+  const newEntities = covertArrToObj(newUsers);
   return {
     ids: [...state.ids, ...newIds],
     entities: {...state.entities, ...newEntities},

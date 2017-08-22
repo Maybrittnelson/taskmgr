@@ -5,6 +5,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { compose } from '@ngrx/core/compose';
 import { createSelector } from 'reselect';
+import * as authActions from '../actions/auth.action';
 
 import * as fromQuote from './quote.reducer';
 import * as fromAuth from './auth.reducer';
@@ -50,7 +51,11 @@ const developmentReducers: ActionReducer<State> = compose(storeFreeze, combineRe
 
 /* 根据开发环境不同返回不同的 reducers*/
 export function reducer(state = initialState, action: any): State {
-  return environment.production ?  productionReducers(state, action) : developmentReducers(state, action);
+  return action.type === authActions.ActionTypes.LOGOUT ?
+    initialState :
+    environment.production ?
+      productionReducers(state, action) :
+      developmentReducers(state, action);
 }
 
 export const getQuoteSate = (state: State) => state.quote;

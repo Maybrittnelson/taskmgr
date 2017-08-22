@@ -1,6 +1,7 @@
 <div class="task-lists">
   <app-task-list
     class="list-container"
+    *ngFor="let list of lists$ | async"
     app-droppable
       [dropTags]="['task-item', 'task-list']"
       [dragEnterClass]="'drag-enter'"
@@ -10,14 +11,14 @@
       [dragData]="list"
       (dropped)="handleMove($event, list)"
       [ngStyle]="{'order': list.order}"
-    *ngFor="let list of lists$ | async">
+      >
       <app-task-header
         [header]="list.name"
         (newTask)="launchNewTaskDialog(list)"
         (moveAll)="launchCopyTaskDialog(list)"
         (delList)="launchConfirmDialog(list)"
         (onEditList)="launchEditlistDialog(list)"></app-task-header>
-      <app-quick-task (quickTask)="handleQuickTask($event)"></app-quick-task>
+      <app-quick-task (quickTask)="handleQuickTask($event, list)"></app-quick-task>
       <app-task-item
         *ngFor="let task of list.tasks"
         [item]="task"

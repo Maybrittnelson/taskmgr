@@ -45,12 +45,6 @@ export class AuthService {
       });
   }
 
-  /**
-   * 使用用户名和密码登录
-   *
-   * @param email 用户名
-   * @param password 密码（明文），服务器会进行加密处理
-   */
   login(username: string, password: string): Observable<Auth> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
