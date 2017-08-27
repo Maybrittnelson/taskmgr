@@ -22,10 +22,10 @@ export interface Identity {
 export interface User {
     id ?: string;
     email: string;
-    password: string;
+    password?: string;
     name: string;
-    avatar: string;
-    projectIds: string[];
+    avatar?: string;
+    projectIds?: string[];
     address?: Address;
     identity?: Identity;
     dateOfBirth?: string;

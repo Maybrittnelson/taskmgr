@@ -79,5 +79,10 @@ export class TaskService {
       .reduce((arr, x) => [...arr, x], []);
   }
 
+  getUserTasks(userId: string): Observable<Task[]> {
+    const uri = `${this.config.uri}/${this.domain}`;
+    return this.http.get(uri, {params: {ownerId: userId}})
+      .map(res => res.json() as Task[]);
+  }
 
 }

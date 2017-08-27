@@ -18,7 +18,7 @@ export class AuthGuardService implements CanActivate {
           .select(getAuthState)
           .map(auth => {
             const result = auth.token !== null && auth.token !== undefined;
-            if (result) {
+            if (!result) {
                this.store$.dispatch(go(['/login']));
             }
             return result;

@@ -31,7 +31,7 @@ export class TaskHomeComponent implements OnInit {
     private store: Store<fromRoot.State>,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef) {
-    this.projectId$ = this.route.paramMap.pluck('id');
+    this.projectId$ = this.route.paramMap.map(p => p.get('id'));
     this.lists$ = this.store.select(fromRoot.getTaskByLists);
   }
 
@@ -84,6 +84,7 @@ export class TaskHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(NewTaskListComponent, {data: {title: '新建列表：'}});
     dialogRef.afterClosed()
       .take(1)
+      .withLatestFrom(this.projectId$, (val, projectId) => ({...val, projectId: projectId}))
       .subscribe(result => this.store.dispatch(new actions.AddAction(result)));
   }
 
