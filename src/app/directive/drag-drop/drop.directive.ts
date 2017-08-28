@@ -1,6 +1,7 @@
 import { Directive, HostListener, ElementRef, Renderer2, Input, Output, EventEmitter } from '@angular/core';
 import {DragData, DragDropService} from '../drag-drop.service';
 
+/*在 task-home 中使用*/
 @Directive({
   selector: '[app-droppable][dropTags][dragEnterClass]'
 })

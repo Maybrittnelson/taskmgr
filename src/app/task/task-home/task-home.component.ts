@@ -29,8 +29,7 @@ export class TaskHomeComponent implements OnInit {
   constructor(
     private dialog: MdDialog,
     private store: Store<fromRoot.State>,
-    private route: ActivatedRoute,
-    private cd: ChangeDetectorRef) {
+    private route: ActivatedRoute) {
     this.projectId$ = this.route.paramMap.map(p => p.get('id'));
     this.lists$ = this.store.select(fromRoot.getTaskByLists);
   }

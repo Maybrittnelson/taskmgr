@@ -75,7 +75,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   launchUpdateDialog(project: Project) {
     const dialogRef = this.dialog.open(
       NewProjectComponent,
-      {data: {thumbnails: this.getThumbnails(), project: project}});
+
+{data: {thumbnails: this.getThumbnails(), project: project}});
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
@@ -83,7 +84,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       .subscribe(project => {
         this.store$.dispatch(new actions.UpdateAction(project));
       });
-
   }
 
   launchConfirmDialog(project) {
