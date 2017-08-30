@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, forwardRef, OnDestroy, OnInit,ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormBuilder, FormGroup} from '@angular/forms';
 import {
@@ -15,7 +15,7 @@ import {
   isFuture,
   format
 } from 'date-fns';
-import {isValidDate} from '../../utils/date.util';
+import {isValidDate, toDate} from '../../utils/date.util';
 import { Subscription } from 'rxjs/Subscription';
 export enum AgeUnit {
   Year = 0,
@@ -44,6 +44,7 @@ export interface Age {
       multi: true
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
@@ -56,6 +57,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   @Input() debounceTime = 300;
   @Input() format = 'YYYY-MM-DD';
   selectedUnit = AgeUnit.Year;
+  dateOfBirth;
   ageUnits = [
     {value: AgeUnit.Year, label: '岁'},
     {value: AgeUnit.Month, label: '月'},
@@ -67,8 +69,9 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   constructor(private fb: FormBuilder) {}
 
   ngOnInit () {
+    const initDate = this.dateOfBirth ? this.dateOfBirth : toDate(subYears(Date.now(), 30));
     this.form = this.fb.group({
-      birthday: ['', this.validateDate],
+      birthday: [parse(initDate), this.validateDate],
       age: this.fb.group({
         ageNum: [],
         ageUnit: [AgeUnit.Year]
@@ -115,7 +118,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       } else {
         const ageToCompare = this.toAge(birthday.value);
         if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
-          birthday.patchValue(d.date, {emitEvent: false});
+          birthday.patchValue(parse(d.date), {emitEvent: false});
           this.propageteChange(d.date);
         }
       }
@@ -136,9 +139,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   // 写入控件值
   writeValue(obj: any): void {
     if (obj) {
-      const date = format(obj, this.format);
-      this.form.get('birthday').patchValue(format(obj, this.format));
-      const age = this.toAge(date);
+      //const date = format(obj, this.format);
+      const date = parse(toDate(obj));
+      this.form.get('birthday').patchValue(date, {emitEvent: true});
+      console.log(date);
+      const age = this.toAge(format(obj, this.format));
       this.form.get('age').get('ageNum').patchValue(age.age);
       this.form.get('age').get('ageUnit').patchValue(age.unit);
     }

@@ -3,7 +3,8 @@ import {
   parse,
   isValid,
   isFuture,
-  differenceInYears
+  differenceInYears,
+  format
 } from 'date-fns';
 export const isValidDate = (val: string): boolean => {
   const date = parse(val)
@@ -12,3 +13,7 @@ export const isValidDate = (val: string): boolean => {
     && !isFuture(date)
     && differenceInYears(Date.now(), date) < 150;
 }
+
+export const toDate = (date: Date) => {
+  return format(date, 'YYYY-MM-DD');
+};

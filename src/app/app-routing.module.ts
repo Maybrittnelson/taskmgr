@@ -7,7 +7,6 @@ const routes: Routes = [
     { path: 'projects', loadChildren: 'app/project#ProjectModule', pathMatch: 'full', canActivate: [AuthGuardService]},
     { path: 'tasklists/:id', loadChildren: 'app/task#TaskModule', pathMatch: 'full', canActivate: [AuthGuardService]},
   { path: 'mycal/:view', loadChildren: 'app/my-calendar#MyCalendarModule', pathMatch: 'full', canActivate: [AuthGuardService]}
-
 ];
 
 @NgModule({

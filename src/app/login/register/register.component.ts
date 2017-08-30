@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         password: [],
         repeat: [],
         avatar: [img],
-        dateOfBirth: ['1990-01-01'],
+        dateOfBirth: [],
         address: [],
         identity: []
     });
@@ -47,6 +47,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
       if (isValidDate(info.dateOfBirth)) {
         this.form.get('dateOfBirth').patchValue(info.dateOfBirth);
+        this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }
     });
   }

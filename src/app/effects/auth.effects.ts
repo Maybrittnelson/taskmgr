@@ -33,7 +33,7 @@ export class AuthEffects {
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGOUT)
-    .map(_ => go(['/']));
+    .map(_ => go(['/login']));
 
 
   @Effect()
