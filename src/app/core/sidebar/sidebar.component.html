@@ -1,30 +1,29 @@
 <md-nav-list>
-  <h3 md-subheader>项目</h3>
+  <h3 mdSubheader>项目</h3>
   <md-list-item [routerLink]="['/projects']" (click)="onNavClick()">
     <md-icon md-list-icon svgIcon="projects" ></md-icon>
-    <span md-line>项目首页</span>
-    <span md-line md-subheader>查看您的所有项目</span>
+    <span mdLine>项目首页</span>
+    <span mdLine mdSubheader>查看您的所有项目</span>
   </md-list-item>
-
   <md-list-item *ngFor="let prj of projects$ | async" (click)="onPrjClick(prj)">
     <md-icon md-list-icon svgIcon="project" ></md-icon>
-    <span md-line>{{prj.name}}</span>
-    <span md-line md-subheader>{{prj.desc}}</span>
+    <span mdLine>{{prj.name}}</span>
+    <span mdLine mdSubheader>{{prj.desc}}</span>
   </md-list-item>
-  <h3 md-subheader>日历</h3>
+  <h3 mdSubheader>日历</h3>
   <md-list-item [routerLink]="['/mycal/month']" (click)="onNavClick()">
     <md-icon md-list-icon svgIcon="month"></md-icon>
-    <span md-line>月视图</span>
-    <span md-line md-subheader>按月查看您的任务</span>
+    <span mdLine>月视图</span>
+    <span mdLine mdSubheader>按月查看您的任务</span>
   </md-list-item>
   <md-list-item [routerLink]="['/mycal/week']">
     <md-icon md-list-icon svgIcon="week"></md-icon>
-    <span md-line>周视图</span>
-    <span md-line md-subheader>按周查看您的任务</span>
+    <span mdLine>周视图</span>
+    <span mdLine mdSubheader>按周查看您的任务</span>
   </md-list-item>
   <md-list-item [routerLink]="['/mycal/day']">
     <md-icon md-list-icon [svgIcon]="today"></md-icon>
-    <span md-line>日视图</span>
-    <span md-line md-subheader>按天查看您的任务</span>
+    <span mdLine>日视图</span>
+    <span mdLine mdSubheader>按天查看您的任务</span>
   </md-list-item>
 </md-nav-list>

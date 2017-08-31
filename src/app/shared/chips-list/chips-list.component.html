@@ -5,13 +5,13 @@
       {{member.name}} <span calss="remove-tag" (click)="removeMember(member)">x</span>
     </md-chip>
   </md-chip-list>
-  <md-input-container clas="full-width" *ngIf="displayInput">
+  <md-form-field clas="full-width" *ngIf="displayInput">
     <input type="text"
            mdInput
            [placeholder]="placeholderText"
            [mdAutocomplete]="autoMember"
            formControlName="memberSearch">
-  </md-input-container>
+  </md-form-field>
 </div>
 <md-autocomplete #autoMember="mdAutocomplete" [displayWith]="displayUser">
   <md-option *ngFor="let item of memberResults$ | async"

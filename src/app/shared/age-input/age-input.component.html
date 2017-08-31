@@ -1,11 +1,5 @@
 <div [formGroup]="form" class="age-input">
     <div>
-        <!-- <md-input-container>
-            <input type="text" mdInput [mdDatepicker]='birthPicker' formControlName="birthday" placeholder="出生日期">
-            <button mdSuffix [mdDatepickerToggle]="birthPicker" type="button"></button> 
-              <md-error>日期不正确</md-error>
-        </md-input-container>
-        <md-datepicker touchUi="true" #birthPicker></md-datepicker> -->
         <md-form-field>
           <input mdInput [mdDatepicker]="birthPicker" placeholder="出生日期" formControlName="birthday" type="text">
           <md-datepicker-toggle mdSuffix [for]="birthPicker"></md-datepicker-toggle>

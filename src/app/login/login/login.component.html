@@ -4,12 +4,12 @@
     <md-card-title>登录:</md-card-title>
   </md-card-header>
   <md-card-content>
-    <md-input-container class="full-width">
+    <md-form-field class="full-width">
       <input mdInput type="text" placeholder="您的email" formControlName="email">
-    </md-input-container>
-    <md-input-container class="full-width">
+    </md-form-field>
+    <md-form-field class="full-width">
       <input mdInput type="password" placeholder="您的密码" formControlName="password">
-    </md-input-container>
+    </md-form-field>
     <button md-raised-button type="submit" color="primary" [disabled]="!form.valid">登录</button>
   </md-card-content>
   <md-card-actions class="text-right">
@@ -27,7 +27,7 @@
         {{(quote$ | async).cn}}
     </md-card-subtitle>
   </md-card-header>
-    <img md-card-image [src]="(quote$ | async).pic" alt="quote image">
+    <img mdCardImage [src]="(quote$ | async).pic" alt="quote image">
   <md-card-content>
     {{(quote$ | async).en}}
   </md-card-content>

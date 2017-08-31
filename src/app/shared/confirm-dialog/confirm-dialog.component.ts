@@ -4,13 +4,13 @@ import {MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 @Component({
   selector: 'app-confirm-dialog',
   template: `
-  <h3 md-dialog-title>{{title}}</h3>
-  <div md-dlalog-content>
+  <h3 mdDialogTitle>{{title}}</h3>
+  <div mdDialogContent>
     {{content}}
   </div>
   <div md-dialog-actions>
     <button type="button" md-raised-button color="primary" (click)="onClick(true)">确定</button>
-    <button type="button" md-dialog-close md-button (click)="onClick(false)">取消</button>
+    <button type="button" mdDialogClose md-button (click)="onClick(false)">取消</button>
   </div>
   `,
   styles: [`

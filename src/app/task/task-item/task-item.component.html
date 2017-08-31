@@ -13,10 +13,10 @@
     class="completion-status"
     [checked]="item.completed"
     (click)="onCheckBoxClick($event)"></md-checkbox>
-  <div md-line class="content" [ngClass]="{'completed': item.completed}">
+  <div mdLine class="content" [ngClass]="{'completed': item.completed}">
     <span [md-tooltip]="item.desc">{{item.desc}}</span>
   </div>
-  <div md-line class="bottom-bar">
+  <div mdLine class="bottom-bar">
     <span class="due-date" *ngIf="item.dueDate">
       {{item.dueDate | date: "yy-MM-dd"}}
     </span>
