@@ -44,11 +44,7 @@ export class ChipsListComponent implements OnInit, ControlValueAccessor {
     this.form = this.fb.group({
       memberSearch: ['']
     });
-    this.memberResults$ = this.form.controls['memberSearch'].valueChanges
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .filter(s => s && s.length > 1)
-      .switchMap(str => this.service.searchUsers(str));
+    this.memberResults$ = this.memberResults$ = this.searchUsers(this.form.controls['memberSearch'].valueChanges);
   }
 
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
