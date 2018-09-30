@@ -26,6 +26,7 @@ export class UserService {
       .map(res => res.json() as User[]);
   }
 
+  //of为返回一个对象
   addProjectRef(user: User, projectId: string): Observable<User> {
     const uri = `${this.config.uri}/${this.domain}/${user.id}`;
     const projectIds = (user.projectIds) ? user.projectIds : [];

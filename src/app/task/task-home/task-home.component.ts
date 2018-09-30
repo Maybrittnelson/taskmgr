@@ -106,7 +106,6 @@ export class TaskHomeComponent implements OnInit {
   }
 
   handleQuickTask(desc: string, list) {
-    console.log(list);
     const user$ = this.store.select(fromRoot.getAuthState).map(auth => auth.user);
     user$.take(1)
       .subscribe(user => this.store.dispatch(new taskActions.AddAction({

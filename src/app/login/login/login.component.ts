@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /* ev.preventDefault(); 因为默认表单提交会刷新页面..但我们不希望刷新页面*/
   onSubmit({value, valid}, ev: Event) {
     ev.preventDefault();
     if (!valid) {
